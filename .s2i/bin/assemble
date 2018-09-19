@@ -1,0 +1,181 @@
+#!/bin/bash
+
+#TODO: Find out why environment script does not take these into account
+export NPM_MIRROR=http://zuul.eurobank.efg.gr/nexus/repository/npm-group/
+export NO_PROXY=zuul.eurobank.efg.gr
+export DEV_MODE=true
+export REACT_APP_BASENAME=/
+export FORCE_COLOR=true
+
+# Prevent running assemble in builders different than official STI image.
+# The official nodejs:4-onbuild already run npm install and use different
+# application folder.
+[ -d "/usr/src/app" ] && exit 0
+
+#set -e
+
+# FIXME: Linking of global modules is disabled for now as it causes npm failures
+#        under RHEL7
+# Global modules good to have
+# npmgl=$(grep "^\s*[^#\s]" ../etc/npm_global_module_list | sort -u)
+# Available global modules; only match top-level npm packages
+#global_modules=$(npm ls -g 2> /dev/null | perl -ne 'print "$1\n" if /^\S+\s(\S+)\@[\d\.-]+/' | sort -u)
+# List all modules in common
+#module_list=$(/usr/bin/comm -12 <(echo "${global_modules}") | tr '\n' ' ')
+# Link the modules
+#npm link $module_list
+
+safeLogging () {
+    if [[ $1 =~ http[s]?://.*@.*$ ]]; then
+        echo $1 | sed 's/^.*@/redacted@/'
+    else
+        echo $1
+    fi
+}
+
+shopt -s dotglob
+echo "---> Installing application source ..."
+mv /tmp/src/* ./
+
+#if [ ! -z $HTTP_PROXY ]; then
+    #echo "---> Setting npm http proxy to" $(safeLogging $HTTP_PROXY)
+	#npm config set proxy $HTTP_PROXY
+#fi
+
+#if [ ! -z $http_proxy ]; then
+    #echo "---> Setting npm http proxy to" $(safeLogging $http_proxy)
+	#npm config set proxy $http_proxy
+#fi
+
+#if [ ! -z $HTTPS_PROXY ]; then
+    #echo "---> Setting npm https proxy to" $(safeLogging $HTTPS_PROXY)
+	#npm config set https-proxy $HTTPS_PROXY
+#fi
+
+#if [ ! -z $https_proxy ]; then
+    #echo "---> Setting npm https proxy to" $(safeLogging $https_proxy)
+	#npm config set https-proxy $https_proxy
+#fi
+
+# Change the npm registry mirror if provided
+if [ -n "$NPM_MIRROR" ]; then
+	npm config set registry $NPM_MIRROR
+fi
+
+#npm config get registry
+#npm config get proxy
+#npm config get https-proxy
+#echo "Searching..."
+#npm search eurobank-
+
+echo "REACT_APP_BASENAME"
+echo $REACT_APP_BASENAME
+echo "FORCE_COLOR" 
+echo $FORCE_COLOR
+echo "DEV_MODE"
+echo $DEV_MODE
+echo "NO_PROXY" 
+echo $NO_PROXY
+echo "NPM_MIRROR" 
+echo $NPM_MIRROR
+
+# Set the DEV_MODE to false by default.
+if [ -z "$DEV_MODE" ]; then
+  export DEV_MODE=false
+fi
+
+# If NODE_ENV is not set by the user, then NODE_ENV is determined by whether
+# the container is run in development mode.
+if [ -z "$NODE_ENV" ]; then
+  if [ "$DEV_MODE" == true ]; then
+    export NODE_ENV=development
+  else
+    export NODE_ENV=production
+  fi
+fi
+
+#echo "Final NODE_ENV" 
+#echo $NODE_ENV
+
+#echo "eurobank-widgets"
+#npm install eurobank-widgets
+
+#echo "eurobank-core"
+#npm install eurobank-core
+
+#echo "eurobank-react-scripts"
+#npm install eurobank-react-scripts
+
+#echo "eurobank-react-scripts"
+#npm install eurobank-react-scripts
+
+#echo "@material-ui/core"
+#npm install material
+
+#echo "- cd .."
+#cd ..
+#pwd
+#echo "- cd .."
+#cd ..
+#pwd
+
+#npm run build
+
+#echo "-------------------------"
+#echo "- Binaries"
+#cd /usr/bin
+#pwd
+#ls -l
+
+#if [ "$NODE_ENV" != "production" ]; then
+
+	#echo "---> Building your Node application from source"
+	#npm install
+
+#else
+	echo "---> Before install"
+	pwd
+	ls -l
+
+	echo "---> Installing all dependencies"
+	NODE_ENV=development npm install
+
+	echo "-------------------------"
+	echo "- Checking react-scripts bin"
+	cd node_modules/.bin
+	pwd
+	cat react-scripts
+	cd ..
+	cd ..
+
+	#do not fail when there is no build script
+	echo "---> Building in production mode"
+	npm run build --if-present
+
+	echo "---> Build done, one way or another"
+	ls -l
+
+	if [ -x "npm-debug.log" ]; then
+		echo "---> log"
+		cat ./npm-debug.log
+	fi
+
+	echo "---> Pruning the development dependencies"
+	npm prune
+
+	# Clear the npm's cache and tmp directories only if they are not a docker volumes
+	NPM_CACHE=$(npm config get cache)
+	if ! mountpoint $NPM_CACHE; then
+		echo "---> Cleaning the npm cache $NPM_CACHE"
+		npm cache clean
+	fi
+	NPM_TMP=$(npm config get tmp)
+	if ! mountpoint $NPM_TMP; then
+		echo "---> Cleaning the $NPM_TMP/npm-*"
+		rm -rf $NPM_TMP/npm-*
+	fi
+
+#fi
+
+# Fix source directory permissions
+fix-permissions ./
