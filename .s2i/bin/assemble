@@ -141,12 +141,11 @@ fi
 	NODE_ENV=development npm install
 
 	echo "-------------------------"
-	echo "- Checking react-scripts bin"
-	cd node_modules/.bin
-	pwd
-	cat react-scripts
-	cd ..
-	cd ..
+	echo "- removing paths.js"
+	rm -f /opt/app-root/src/node_modules/eurobank-react-scripts/config/paths.js
+	echo "-------------------------"
+	echo "- copying paths.js"
+	cp /opt/app-root/src/paths.js /opt/app-root/src/node_modules/eurobank-react-scripts/config/paths.js
 
 	#do not fail when there is no build script
 	echo "---> Building in production mode"
