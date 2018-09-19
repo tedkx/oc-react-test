@@ -146,6 +146,24 @@ fi
 	echo "-------------------------"
 	echo "- copying paths.js"
 	cp /opt/app-root/src/paths.js /opt/app-root/src/node_modules/eurobank-react-scripts/config/paths.js
+	echo "-------------------------"
+	echo "- displaying paths.js"
+	cat /opt/app-root/src/node_modules/eurobank-react-scripts/config/paths.js
+
+	
+	echo "-------------------------"
+	echo "- removing eurobank-react-scripts.js"
+	rm -f /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js
+	rm -f /opt/app-root/src/node_modules/.bin/react-scripts
+	echo "-------------------------"
+	echo "- copying eurobank-react-scripts.js"
+	cp /opt/app-root/src/react-scripts.js /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js
+	cp /opt/app-root/src/react-scripts.js /opt/app-root/src/node_modules/.bin/react-scripts
+
+	echo "- displaying .bin/react-scripts.js"
+	cat /opt/app-root/src/node_modules/.bin/react-scripts
+	echo "- displaying eurobank-react-scripts.js"
+	cat /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js
 
 	#do not fail when there is no build script
 	echo "---> Building in production mode"
