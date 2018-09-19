@@ -166,12 +166,14 @@ fi
 	echo "-------------------------"
 	echo "- copying eurobank-react-scripts.js"
 	cp /opt/app-root/src/react-scripts.js /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js
-	cp /opt/app-root/src/react-scripts.js /opt/app-root/src/node_modules/.bin/react-scripts
+	ln -s /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js /opt/app-root/src/node_modules/.bin/react-scripts
 
 	echo "-------------------------"
 	echo "- chown after"
 	cd /opt/app-root/src/node_modules/.bin
 	ls -l
+
+	cd /opt/app-root/src/
 
 	#do not fail when there is no build script
 	echo "---> Building in production mode"
