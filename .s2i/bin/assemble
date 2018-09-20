@@ -141,37 +141,12 @@ fi
 	NODE_ENV=development npm install
 
 	echo "-------------------------"
-	echo "- chown before"
-	cd /opt/app-root/src/node_modules/eurobank-react-scripts/config
-	ls -l
+	echo "- EURS package.json"
+	cat /opt/app-root/src/node_modules/eurobank-react-scripts/package.json
 
 	echo "-------------------------"
-	echo "- removing paths.js"
-	rm -f /opt/app-root/src/node_modules/eurobank-react-scripts/config/paths.js
-	echo "-------------------------"
-	echo "- copying paths.js"
-	cp /opt/app-root/src/paths.js /opt/app-root/src/node_modules/eurobank-react-scripts/config/paths.js
-	echo "-------------------------"
-	echo "- chown after"
-	ls -l
-	
-	echo "-------------------------"
-	echo "- chown before"
-	cd /opt/app-root/src/node_modules/.bin
-	ls -l
-	echo "-------------------------"
-	echo "- removing eurobank-react-scripts.js"
-	rm -f /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js
-	rm -f /opt/app-root/src/node_modules/.bin/react-scripts
-	echo "-------------------------"
-	echo "- copying eurobank-react-scripts.js"
-	cp /opt/app-root/src/react-scripts.js /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js
-	ln -s /opt/app-root/src/node_modules/eurobank-react-scripts/bin/react-scripts.js /opt/app-root/src/node_modules/.bin/react-scripts
-
-	echo "-------------------------"
-	echo "- chown after"
-	cd /opt/app-root/src/node_modules/.bin
-	ls -l
+	echo "- EURS eject.js"
+	cat /opt/app-root/src/node_modules/eurobank-react-scripts/scripts/eject.js
 
 	cd /opt/app-root/src/
 

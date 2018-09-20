@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "eurobank-react-scripts": "^1.1.4-9"
+    "eurobank-react-scripts": "^1.1.4-12"
   },
   "scripts": {
     "start": "react-scripts start",
