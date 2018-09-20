@@ -98,9 +98,14 @@ fi
 #else
 	echo "-------------------------"
 	echo "- List repos"
-	cat /etc/yum.repos.d
+	cd /etc/yum.repos.d
+	ls -l
 	echo "-------------------------"
 	echo " "
+	cd /opt/app-root/src
+
+	echo "---> Installing all dependencies"
+	NODE_ENV=development npm install
 
 	#do not fail when there is no build script
 	echo "---> Building in production mode"
