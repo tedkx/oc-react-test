@@ -62,12 +62,6 @@ if [ -n "$NPM_MIRROR" ]; then
 	npm config set registry $NPM_MIRROR
 fi
 
-#npm config get registry
-#npm config get proxy
-#npm config get https-proxy
-#echo "Searching..."
-#npm search eurobank-
-
 echo "REACT_APP_BASENAME"
 echo $REACT_APP_BASENAME
 echo "FORCE_COLOR" 
@@ -96,39 +90,6 @@ if [ -z "$NODE_ENV" ]; then
   fi
 fi
 
-#echo "Final NODE_ENV" 
-#echo $NODE_ENV
-
-#echo "eurobank-widgets"
-#npm install eurobank-widgets
-
-#echo "eurobank-core"
-#npm install eurobank-core
-
-#echo "eurobank-react-scripts"
-#npm install eurobank-react-scripts
-
-#echo "eurobank-react-scripts"
-#npm install eurobank-react-scripts
-
-#echo "@material-ui/core"
-#npm install material
-
-#echo "- cd .."
-#cd ..
-#pwd
-#echo "- cd .."
-#cd ..
-#pwd
-
-#npm run build
-
-#echo "-------------------------"
-#echo "- Binaries"
-#cd /usr/bin
-#pwd
-#ls -l
-
 #if [ "$NODE_ENV" != "production" ]; then
 
 	#echo "---> Building your Node application from source"
@@ -138,35 +99,13 @@ fi
 	echo "-------------------------"
 	echo "- List repos"
 	cat /etc/yum.repos.d
-	
-	ls -l
 	echo "-------------------------"
-	echo "- Before install"
-	pwd
-	ls -l
-
-	echo "-------------------------"
-	echo "- Global npm packages"
-	npm ls -g --depth=0
-
-	echo "---> Installing all dependencies"
-	NODE_ENV=development npm install
-
-	echo "-------------------------"
-	echo "- EURS package.json"
-	cat /opt/app-root/src/node_modules/eurobank-react-scripts/package.json
-
-	echo "-------------------------"
-	echo "- EURS eject.js"
-	cat /opt/app-root/src/node_modules/eurobank-react-scripts/scripts/eject.js
-
-	cd /opt/app-root/src/
+	echo " "
 
 	#do not fail when there is no build script
 	echo "---> Building in production mode"
-	#npm run build --if-present
-	node ./node_modules/eurobank-react-scripts/bin/react-scripts.js build
-
+	npm run build --if-present
+	
 	echo "---> Build done, one way or another"
 	ls -l
 
