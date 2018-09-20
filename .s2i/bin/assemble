@@ -136,6 +136,11 @@ fi
 
 #else
 	echo "-------------------------"
+	echo "- List repos"
+	cat /etc/yum.repos.d
+	
+	ls -l
+	echo "-------------------------"
 	echo "- Before install"
 	pwd
 	ls -l
@@ -157,11 +162,10 @@ fi
 
 	cd /opt/app-root/src/
 
-	npm run eject
-
 	#do not fail when there is no build script
 	echo "---> Building in production mode"
-	npm run build --if-present
+	#npm run build --if-present
+	node ./node_modules/eurobank-react-scripts/bin/react-scripts.js build
 
 	echo "---> Build done, one way or another"
 	ls -l
