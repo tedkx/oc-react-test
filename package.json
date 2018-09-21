@@ -4,12 +4,13 @@
   "private": true,
   "dependencies": {
     "eurobank-react-scripts": "^1.1.4-17",
+    "express": "^4.16.3",
+    "path": "^0.12.7",
     "react": "^16.5.0",
-    "react-dom": "^16.5.0",
-    "serve": "^10.0.1"
+    "react-dom": "^16.5.0"
   },
   "scripts": {
-    "serve": "serve -s build -l 8080",
+    "serve": "node server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
