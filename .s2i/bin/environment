@@ -1,4 +1,6 @@
 NPM_MIRROR=http://zuul.eurobank.efg.gr/nexus/repository/npm-group/
+http_proxy=
+https_proxy=
 NO_PROXY=zuul.eurobank.efg.gr
 DEV_MODE=true
 REACT_APP_BASENAME=/
